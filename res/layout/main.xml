@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.calculator.FirstActivity" >
+
+    
+    <TextView 
+        android:id="@+id/tv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+    <Button
+        android:layout_below="@id/tv"
+        android:id="@+id/startListener1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="启动监听 "
+        /> 
+        
+    <Button
+        android:layout_below="@id/startListener1"
+        android:id="@+id/startListener2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="发送数据 "
+        /> 
+    
+    </RelativeLayout>
