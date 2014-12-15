@@ -4,26 +4,57 @@
     android:layout_height="match_parent"
     tools:context="com.example.calculator.FirstActivity" >
 
-    
     <TextView 
-        android:id="@+id/tv"
+        android:text="Hello,SocketActivity"
+        android:id="@+id/tv1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        />
+         /> 
+    
     <Button
-        android:layout_below="@id/tv"
+        android:layout_below="@id/tv1"
         android:id="@+id/startListener1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="启动监听 "
         /> 
         
-    <Button
+     <TextView 
+        android:text="输入要发送的数据 "
         android:layout_below="@id/startListener1"
+        android:id="@+id/tv2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         />   
+        
+    <EditText
+        android:layout_below="@id/tv2"
+        android:id="@+id/et1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+        
+    <Button
+        android:layout_below="@id/et1"
         android:id="@+id/startListener2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="发送数据 "
         /> 
+        
+    <TextView 
+        android:text="输出收到的数据 "
+        android:layout_below="@id/startListener2"
+        android:id="@+id/tv3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         />   
+         
+    <EditText
+        android:layout_below="@id/tv3"
+        android:id="@+id/et2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
     
     </RelativeLayout>

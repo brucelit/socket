@@ -12,14 +12,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class SocketActivity extends Activity {
     /** Called when the activity is first created. */
 	private Button startButton1,startButton2;
+	private EditText et1,et2;
+	private TextView tv1,tv2,tv3;
+	public String result=null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        et1=(EditText)findViewById(R.id.et1);
+        et2=(EditText)findViewById(R.id.et2);
+        tv1=(TextView)findViewById(R.id.tv1);
+        tv2=(TextView)findViewById(R.id.tv2);
+        tv3=(TextView)findViewById(R.id.tv3);
         startButton1 = (Button)findViewById(R.id.startListener1);
         startButton1.setOnClickListener(new StartSocketListener());
         startButton2 = (Button)findViewById(R.id.startListener2);
@@ -40,15 +50,11 @@ public class SocketActivity extends Activity {
 	@Override
 	public void onClick(View v) {
 		try {
-			//首先创建一个DatagramSocket对象
-			DatagramSocket socket = new DatagramSocket(4567);
-			//创建一个InetAddree
+			DatagramSocket socket = new DatagramSocket(5678);
 			InetAddress serverAddress = InetAddress.getByName("192.168.43.164");
-			String str = "hello";
+			String str = et1.getText().toString();
 			byte data [] = str.getBytes();
-			//创建一个DatagramPacket对象，并指定要讲这个数据包发送到网络当中的哪个地址，以及端口号
 			DatagramPacket packet = new DatagramPacket(data,data.length,serverAddress,4567);
-			//调用socket对象的send方法，发送数据
 			socket.send(packet);
 			socket.close();
 		} catch (Exception e) {
@@ -59,9 +65,6 @@ public class SocketActivity extends Activity {
 	    		
 		}
     
-    
-    
-    
    public class ServerThread extends Thread{
     	public void run(){
     		try {
@@ -71,9 +74,11 @@ public class SocketActivity extends Activity {
 				while(true)
 				{
 				socket.receive(packet);
-				String result = new String(packet.getData(),packet.getOffset(),packet.getLength());
-				System.out.println("result--->" + result);
-				}
+				result = new String(packet.getData(),packet.getOffset(),packet.getLength());
+				System.out.println("result--->" + result);	
+				break;
+				}		
+				et2.setText(result);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
