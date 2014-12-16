@@ -5,6 +5,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 import android.app.Activity;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,18 +22,20 @@ public class SocketActivity extends Activity {
 	private Button startButton1, startButton2;
 	private EditText et1;
 	TextView et2;
-	private TextView tv1, tv2, tv3;
+	private TextView tv1, tv2, tv3,tv4,tv5;
 	public String result = null;
+	public String ip;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		et1 = (EditText) findViewById(R.id.et1);
-		et2 = (TextView) findViewById(R.id.et2);
 		tv1 = (TextView) findViewById(R.id.tv1);
 		tv2 = (TextView) findViewById(R.id.tv2);
 		tv3 = (TextView) findViewById(R.id.tv3);
+		tv4 = (TextView) findViewById(R.id.tv4);
+		tv5 = (TextView) findViewById(R.id.tv5);
 		startButton1 = (Button) findViewById(R.id.startListener1);
 		startButton1.setOnClickListener(new StartSocketListener());
 		startButton2 = (Button) findViewById(R.id.startListener2);
@@ -44,7 +48,7 @@ public class SocketActivity extends Activity {
 		public void onClick(View v) {
 			new ServerThread().start();
 		}
-
+        
 	}
 
 	public class StartPacketListener implements OnClickListener {
@@ -52,9 +56,17 @@ public class SocketActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			try {
-				DatagramSocket socket = new DatagramSocket(5678);
-				InetAddress serverAddress = InetAddress
-						.getByName("192.168.43.224");
+				WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);   
+			      WifiInfo wifiInfo = wifiManager.getConnectionInfo();   
+			      int ipAddress = wifiInfo.getIpAddress();      
+			      ip = String.format("%d.%d.%d.%d",   
+			              (ipAddress & 0xff),   
+			              (ipAddress >> 8 & 0xff),   
+			              (ipAddress >> 16 & 0xff),   
+			              (ipAddress >> 24 & 0xff));
+			    tv5.setText(ip);
+				DatagramSocket socket = new DatagramSocket(5678);			
+				InetAddress serverAddress = InetAddress.getByName(ip);
 				String str = et1.getText().toString();
 				byte data[] = str.getBytes();
 				DatagramPacket packet = new DatagramPacket(data, data.length,
@@ -98,7 +110,7 @@ public class SocketActivity extends Activity {
 			Bundle data = msg.getData();
 			String result = data.getString("result");
 			Log.e("result_handler", result);
-			et2.setText(result);
+			tv4.setText(result);
 		}
 
 	};
